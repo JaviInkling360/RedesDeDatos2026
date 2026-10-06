@@ -1,7 +1,7 @@
 import socket
 
 HOST = '0.0.0.0'
-PORT = 65432
+PORT = 65432 # Pueden cambiar el numero del port si no les deja usarlo
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
