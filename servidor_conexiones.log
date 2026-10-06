@@ -24,3 +24,9 @@
 2026/10/06;16:11:41;Mensaje recibido de 192.168.50.9: sa
 2026/10/06;16:11:55;El cliente 192.168.50.9 cerró la conexión
 2026/10/06;16:11:55;Conexión finalizada con 192.168.50.9. Esperando a un nuevo cliente...
+2026/10/06;16:27:49;Servidor permanentemente escuchando en el puerto 65432
+2026/10/06;16:29:13;Conexión recibida desde 192.168.50.9
+2026/10/06;16:29:18;Mensaje recibido de 192.168.50.9: dsadsa
+2026/10/06;16:29:34;Conexión finalizada con 192.168.50.9. Esperando a un nuevo cliente...
+2026/10/06;16:29:34;Servidor detenido manualmente con Ctrl+C
+2026/10/06;16:29:34;Socket principal del servidor cerrado
