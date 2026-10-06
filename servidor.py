@@ -1,3 +1,5 @@
+# IMPORTANTE: Desactivar Firewall antes de correr el script de servidor (Por lo menos en Windows, no he probado en Linux)
+
 import socket
 from datetime import datetime
 
