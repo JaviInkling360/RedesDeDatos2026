@@ -3,6 +3,20 @@ from datetime import datetime
 
 HOST = '0.0.0.0'
 PORT = 65432 # Pueden cambiar el numero del port si no les deja usarlo
+LOG_FILE = 'servidor_conexiones.log'
+
+def registrar_log(mensaje):
+    """Escribe un mensaje en la consola y en el archivo log con el formato YYYY/MM/DD;HH:MM:SS;Mensaje"""
+    ahora = datetime.now()
+    fecha_hora = ahora.strftime("%Y/%m/%d;%H:%M:%S")
+    registro = f"{fecha_hora};{mensaje}"
+    
+    # Imprimir en consola
+    print(registro)
+    
+    # Guardar en el archivo .log (modo 'a' para agregar al final sin sobrescribir)
+    with open(LOG_FILE, 'a', encoding='utf-8') as f:
+        f.write(registro + '\n')
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -11,24 +25,40 @@ server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 server_socket.bind((HOST, PORT))
 server_socket.listen()
-print(f"[*] Servidor permanentemente escuchando en el puerto {PORT}...")
 
-while True:
-    client_socket, client_address = server_socket.accept()
-    ahora = datetime.now()
-    fecha_hora = ahora.strftime("%Y/%m/%d;%H:%M:%S")
-    ip_cliente = client_address[0]
-    print(f"{fecha_hora};Conexión recibida desde {ip_cliente}")
-    
-    try:
-        while True:
-            data = client_socket.recv(1024)
-            if not data:
-                break
-            print(f"Mensaje recibido: {data.decode('utf-8')}")
-            client_socket.sendall(b"Mensaje recibido correctamente")
-    except ConnectionResetError:
-        print("[-] El cliente se desconectó abruptamente.")
-    finally:
-        client_socket.close()
-        print("[*] Esperando a un nuevo cliente...")
+registrar_log(f"Servidor permanentemente escuchando en el puerto {PORT}")
+
+try:
+    while True:
+        client_socket, client_address = server_socket.accept()
+        ip_cliente = client_address[0]
+        
+        # Registro de conexión establecida
+        registrar_log(f"Conexión recibida desde {ip_cliente}")
+        
+        try:
+            while True:
+                data = client_socket.recv(1024)
+                if not data:
+                    # El cliente cerró la conexión ordenadamente
+                    registrar_log(f"El cliente {ip_cliente} cerró la conexión")
+                    break
+                
+                mensaje = data.decode('utf-8')
+                registrar_log(f"Mensaje recibido de {ip_cliente}: {mensaje}")
+                
+                # Responder al cliente
+                client_socket.sendall(b"Mensaje recibido correctamente")
+                
+        except ConnectionResetError:
+            registrar_log(f"El cliente {ip_cliente} se desconectó abruptamente")
+            
+        finally:
+            client_socket.close()
+            registrar_log(f"Conexión finalizada con {ip_cliente}. Esperando a un nuevo cliente...")
+
+except KeyboardInterrupt:
+    registrar_log("Servidor detenido manualmente con Ctrl+C")
+finally:
+    server_socket.close()
+    registrar_log("Socket principal del servidor cerrado")
