@@ -1,7 +1,7 @@
 import socket
 
 # Dirección IP de la computadora Servidor
-SERVER_IP = '127.0.0.1'  # <--- CAMBIA ESTO por la IP de tu servidor
+SERVER_IP = '127.0.0.1'  # <--- CAMBIA ESTO por la dirección IPv4 de tu servidor
 PORT = 65432
 
 # Crear el socket TCP/IP
