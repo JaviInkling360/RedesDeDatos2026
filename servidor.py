@@ -28,11 +28,18 @@ server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 server_socket.bind((HOST, PORT))
 server_socket.listen()
 
+server_socket.settimeout(1.0)
+
 registrar_log(f"Servidor permanentemente escuchando en el puerto {PORT}")
 
 try:
     while True:
-        client_socket, client_address = server_socket.accept()
+        try:
+            client_socket, client_address = server_socket.accept()
+        except socket.timeout:
+            continue
+        client_socket.settimeout(None)
+        
         ip_cliente = client_address[0]
         
         # Registro de conexión establecida
