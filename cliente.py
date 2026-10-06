@@ -2,7 +2,7 @@ import socket
 
 # Dirección IP de la computadora Servidor
 SERVER_IP = '127.0.0.1'  # <--- CAMBIA ESTO por la IP de tu servidor
-PORT = 60000
+PORT = 65432
 
 # Crear el socket TCP/IP
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
