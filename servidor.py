@@ -1,4 +1,5 @@
 import socket
+from datetime import datetime
 
 HOST = '0.0.0.0'
 PORT = 65432 # Pueden cambiar el numero del port si no les deja usarlo
@@ -14,7 +15,10 @@ print(f"[*] Servidor permanentemente escuchando en el puerto {PORT}...")
 
 while True:
     client_socket, client_address = server_socket.accept()
-    print(f"[+] Cliente conectado desde: {client_address}")
+    ahora = datetime.now()
+    fecha_hora = ahora.strftime("%Y/%m/%d;%H:%M:%S")
+    ip_cliente = client_address[0]
+    print(f"{fecha_hora};Conexión recibida desde {ip_cliente}")
     
     try:
         while True:
