@@ -1,4 +1,4 @@
-# IMPORTANTE: Desactivar Firewall antes de correr el script de servidor (Por lo menos en Windows, no he probado en Linux)
+# IMPORTANTE: Desactivar Firewall antes de correr el script de servidor (Por lo menos en Windows, script no probado en Linux)
 
 import socket
 from datetime import datetime
@@ -28,13 +28,14 @@ server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 server_socket.bind((HOST, PORT))
 server_socket.listen()
 
+# Permite al servidor finalizar su operación con CTRL + C (1)
 server_socket.settimeout(1.0)
 
 registrar_log(f"Servidor permanentemente escuchando en el puerto {PORT}")
 
 try:
     while True:
-        try:
+        try: # Permite al servidor finalizar su operación con CTRL + C (2)
             client_socket, client_address = server_socket.accept()
         except socket.timeout:
             continue
