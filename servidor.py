@@ -20,7 +20,7 @@ def registrar_log(mensaje):
     with open(LOG_FILE, 'a', encoding='utf-8') as f:
         f.write(registro + '\n')
 
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # Crea el socket del servidor para la comunicación TCP
 
 # Permite reutilizar la dirección del puerto inmediatamente sin esperar a TIME_WAIT
 server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -35,9 +35,9 @@ registrar_log(f"Servidor permanentemente escuchando en el puerto {PORT}")
 
 try:
     while True:
-        try: # Permite al servidor finalizar su operación con CTRL + C (2)
+        try: 
             client_socket, client_address = server_socket.accept()
-        except socket.timeout:
+        except socket.timeout: # Permite al servidor finalizar su operación con CTRL + C (2)
             continue
         client_socket.settimeout(None)
         
